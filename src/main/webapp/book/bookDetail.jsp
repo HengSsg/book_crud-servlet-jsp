@@ -72,7 +72,7 @@ pageEncoding="UTF-8" %>
 
       <div class="btn-container">
        <a href="/book_crud/books/list" class="btn">뒤로가기</a>
-        <a href="/book_crud/books/edit/<%=book.getNo() %>" class="btn"
+        <a href="/book_crud/books/update/<%=book.getNo() %>" class="btn"
           >수정하기</a
         >
        <a href="#" class="btn" onclick="deleteBook(<%=book.getNo() %>)">삭제하기</a>

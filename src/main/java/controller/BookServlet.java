@@ -1,6 +1,9 @@
 package controller;
 
 import model.vo.Book;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import service.BookService;
 import service.BookServiceImpl;
 
@@ -9,7 +12,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class BookServlet extends HttpServlet {
@@ -47,9 +52,16 @@ public class BookServlet extends HttpServlet {
             rd.forward(req, resp);
         }
         if ("update".equals(endpoint)) {
+            String id = getId(req.getPathInfo());
 
-            RequestDispatcher rd = req.getRequestDispatcher("/book/bookUpdate.jsp");
-            rd.forward(req, resp);
+            if (id != null) { // no에 해당하는 book상세 리턴
+                Book book = bookService.getOneBook(Integer.parseInt(id));
+
+                req.setAttribute("book", book);
+                RequestDispatcher rd = req.getRequestDispatcher("/book/bookUpdate.jsp");
+                rd.forward(req, resp);
+            }
+
         }
     }
 
@@ -81,20 +93,39 @@ public class BookServlet extends HttpServlet {
 
         if ("update".equals(endpoint)) { // 책 정보 수정 로직
             String id = getId(req.getPathInfo());
-            if (id != null) { // no에 해당하는 book상세 리턴
-                Book book = bookService.getOneBook(Integer.parseInt(id));
 
-                req.setAttribute("book", book);
-                RequestDispatcher rd = req.getRequestDispatcher("/book/bookDetail.jsp");
-                rd.forward(req, resp);
+            if (id != null) { // no에 해당하는 book 수정
+                Book book = new Book();
 
-            } else { // no 가 없으면 전제 리스트 조회
-                ArrayList<Book> books = bookService.getAllBooks();
+                StringBuilder requestBody = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    requestBody.append(line);
+                }
+                reader.close();
 
-                req.setAttribute("books", books);
-                RequestDispatcher rd = req.getRequestDispatcher("/book/bookList.jsp");
-                rd.forward(req, resp);
+                String bodyContent = requestBody.toString();
+                JSONParser parser = new JSONParser();
+                Object obj;
+                JSONObject jsonObj = null;
+                try {
+                    obj = parser.parse(bodyContent);
+                    jsonObj = (JSONObject) obj;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                book.setNo(Integer.parseInt(jsonObj.get("bookNo").toString()));
+                book.setBookName(jsonObj.get("bookName").toString());
+                book.setBookAuthor(jsonObj.get("bookAuthor").toString());
+                book.setBookPublisher(jsonObj.get("bookPublisher").toString());
 
+                boolean flag = bookService.updateOneBook(book);
+                if(flag) {
+                    System.out.println("수정이 완료되었습니다.");
+                } else {
+                    System.out.println("수정에 실패했습니다.");
+                }
             }
         }
 

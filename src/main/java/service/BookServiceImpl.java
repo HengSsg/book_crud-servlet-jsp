@@ -29,8 +29,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public boolean updateOneBook() {
-        return false;
+    public boolean updateOneBook(Book book) {
+        return bookRepository.updateOne(book);
     }
 
     @Override
