@@ -46,6 +46,11 @@ public class BookServlet extends HttpServlet {
             RequestDispatcher rd = req.getRequestDispatcher("/book/bookCreate.jsp");
             rd.forward(req, resp);
         }
+        if ("update".equals(endpoint)) {
+
+            RequestDispatcher rd = req.getRequestDispatcher("/book/bookUpdate.jsp");
+            rd.forward(req, resp);
+        }
     }
 
     @Override
@@ -75,7 +80,22 @@ public class BookServlet extends HttpServlet {
         String endpoint = getEndpoint(req.getPathInfo());
 
         if ("update".equals(endpoint)) { // 책 정보 수정 로직
+            String id = getId(req.getPathInfo());
+            if (id != null) { // no에 해당하는 book상세 리턴
+                Book book = bookService.getOneBook(Integer.parseInt(id));
 
+                req.setAttribute("book", book);
+                RequestDispatcher rd = req.getRequestDispatcher("/book/bookDetail.jsp");
+                rd.forward(req, resp);
+
+            } else { // no 가 없으면 전제 리스트 조회
+                ArrayList<Book> books = bookService.getAllBooks();
+
+                req.setAttribute("books", books);
+                RequestDispatcher rd = req.getRequestDispatcher("/book/bookList.jsp");
+                rd.forward(req, resp);
+
+            }
         }
 
 
@@ -86,7 +106,17 @@ public class BookServlet extends HttpServlet {
         String endpoint = getEndpoint(req.getPathInfo());
 
         if ("delete".equals(endpoint)) { // 책 삭제 로직
+            String id = getId(req.getPathInfo());
+            if (id != null) { // no에 해당하는 book 삭제
+                System.out.println(id);
+                boolean flag = bookService.deleteOneBook(Integer.parseInt(id));
 
+                if (flag) {
+                    System.out.println("책이 삭제 되었습니다!!");
+                } else {
+                    System.out.println("책 삭제에 실패했습니다.");
+                }
+            }
         }
     }
 

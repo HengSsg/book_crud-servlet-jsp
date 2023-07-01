@@ -35,6 +35,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public boolean deleteOneBook(int no) {
-        return false;
+        return bookRepository.deleteOne(no);
     }
 }

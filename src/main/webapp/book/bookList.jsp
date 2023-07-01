@@ -46,8 +46,7 @@ pageEncoding="UTF-8" %>
         <th>도서명</th>
         <th>저자</th>
         <th>출판사</th>
-        <th>생성일</th>
-        <th>수정일</th>
+        <th></th>
       </tr>
       <% for (Book book:books) {%>
       <tr>
