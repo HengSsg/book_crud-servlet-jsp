@@ -6,7 +6,7 @@ import util.ConnectionManager;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class BookDAO {
+public class BookDAO implements BookRepository {
     private final ConnectionManager connectionManager;
     private final Connection conn;
 
@@ -16,7 +16,8 @@ public class BookDAO {
     }
 
     // 책 하나 select
-    public Book selectOneBook(int no) {
+    @Override
+    public Book selectOne(int no) {
         Book book = new Book();
         String sql = "select * from book where no = ?";
         try {
@@ -40,7 +41,8 @@ public class BookDAO {
     }
 
     // 책 전체 select
-    public ArrayList<Book> selectAllBooks() {
+    @Override
+    public ArrayList<Book> selectAll() {
         ArrayList<Book> books = new ArrayList<>();
         String sql = "select * from book";
         try {
@@ -63,10 +65,13 @@ public class BookDAO {
             e.printStackTrace();
         }
         return books;
+
     }
 
-    // 책 정보 업데이트
-    public boolean updateOneBook(Book book) {
+
+    @Override
+    public boolean updateOne(Book book) {
+        // 책 정보 업데이트
         int affectedNum = 0;
         String sql = "update book set book_name = ?, book_author = ?, book_publisher = ?, updated_at = ? where no = ?";
         try {
@@ -86,8 +91,9 @@ public class BookDAO {
         return affectedNum > 0;
     }
 
-    // 책 삭제
-    public boolean deleteOneBook(int no) {
+    @Override
+    public boolean deleteOne(int no) {
+        // 책 삭제
         int affectedNum = 0;
         String sql = "delete from book where no = ?";
         try {
@@ -102,4 +108,5 @@ public class BookDAO {
         }
         return affectedNum > 0;
     }
+
 }
