@@ -26,6 +26,7 @@ public class BookServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String endpoint = getEndpoint(req.getPathInfo());
 
         if ("list".equals(endpoint)) { // 전체 책 리스트 조회
@@ -67,6 +68,7 @@ public class BookServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String endpoint = getEndpoint(req.getPathInfo());
 
         if ("create".equals(endpoint)) { // 책 데이터 생성 로직
@@ -89,6 +91,7 @@ public class BookServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String endpoint = getEndpoint(req.getPathInfo());
 
         if ("update".equals(endpoint)) { // 책 정보 수정 로직
@@ -134,6 +137,7 @@ public class BookServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String endpoint = getEndpoint(req.getPathInfo());
 
         if ("delete".equals(endpoint)) { // 책 삭제 로직

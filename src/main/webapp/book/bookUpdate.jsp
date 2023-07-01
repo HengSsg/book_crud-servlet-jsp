@@ -102,7 +102,8 @@ contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
         />
 
         <div class="btn-container">
-          <button type="submit">수</button>
+          <!-- <button type="submit" class="btn">수정</button> -->
+          <a href="#" id="updateBtn" class="btn">수정</a>
           <a href="/book_crud/books/list/<%=book.getNo() %>" class="btn"
             >취소</a
           >
@@ -111,10 +112,10 @@ contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     </div>
     <script>
       $(function () {
-        $("#myForm").submit(function (e) {
+        $("#updateBtn").click(function (e) {
           e.preventDefault();
 
-          let formData = $(this).serializeArray();
+          let formData = $("#myForm").serializeArray();
           let jsonData = formData.reduce(function (obj, item) {
             obj[item.name] = item.value;
             return obj;

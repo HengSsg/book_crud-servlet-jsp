@@ -38,7 +38,7 @@ pageEncoding="UTF-8" %>
       }
 
       input[type="submit"] {
-        background-color: #4caf50;
+        background-color: #00a1e0;
         color: #fff;
         padding: 10px 20px;
         border: none;
@@ -48,7 +48,7 @@ pageEncoding="UTF-8" %>
       }
 
       input[type="submit"]:hover {
-        background-color: #45a049;
+        background-color: #00a1e0;
       }
     </style>
   </head>

@@ -34,7 +34,26 @@ pageEncoding="UTF-8" %>
       th {
         background-color: #f2f2f2;
       }
+      .btn-container {
+        margin-top: 20px;
+      }
+      .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 4px;
+        background-color: #19baff;
+        color: #fff;
+        text-decoration: none;
+        margin-right: 10px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
+
+      .btn:hover {
+        background-color: #00a1e0;
+      }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
   <%
@@ -54,26 +73,40 @@ pageEncoding="UTF-8" %>
         <td><a href="list/<%=book.getNo() %>"><%=book.getBookName() %></a></td>
         <td><%=book.getBookAuthor() %></td>
         <td><%=book.getBookPublisher() %></td>
-         <td><button class="btn" onclick="deleteBook(<%=book.getNo() %>)">삭제하기</button></td>
+        <td><a href="#" id="deleteBtn" class="btn" data-book-no="<%=book.getNo() %>">삭제하기</a></td>
       </tr>
            <% }%>
-     
+     <tr>
+     <!-- <td><button onclick="createBook()">도서 생성하기</button></td> -->
+     <td><a href="#" class="btn" id="createBtn">도서 생성하기</a></td>
+     </tr>
       <!-- Add more rows for each book in the list -->
     </table>
+     
         <script>
-        function deleteBook(bookNo) {
-            var xhr = new XMLHttpRequest();
-            xhr.open("DELETE", "/book_crud/books/delete/" + bookNo, true);
-            xhr.onreadystatechange = function () {
-              if (xhr.readyState === 4 && xhr.status === 200) {
-                // 요청이 성공적으로 처리되었을 때 실행할 코드
-                alert("도서가 삭제되었습니다.");
-                window.location = "/book_crud/books/list";
-                // 페이지를 새로고침하거나 동적으로 삭제된 도서를 제거하는 등의 작업을 수행할 수 있습니다.
-              }
-            };
-            xhr.send();
-          }
+
+        $("#deleteBtn").click(function (e) {
+          var bookNo = $(this).data("book-no");
+          
+          $.ajax({
+            url: "/book_crud/books/delete/" + bookNo,
+            type: "DELETE",
+            success: function (response) {
+              alert("도서가 삭제되었습니다.");
+              window.location = "/book_crud/books/list";
+            },
+            error: function (xhr, status, error) {
+              console.log("도서 삭제에 실패하였습니다.");
+            },
+          });
+        });
+
+  
+
+        $("#createBtn").click(function () {
+          window.location = "/book_crud/books/create";
+        })
+       
         </script>
   </body>
 </html>
