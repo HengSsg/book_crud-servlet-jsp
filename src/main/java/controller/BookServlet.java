@@ -30,6 +30,9 @@ public class BookServlet extends HttpServlet {
 
             }
         }
+        if ("create".equals(endpoint)) { // 책 생성 페이지 리턴
+
+        }
     }
 
     @Override
