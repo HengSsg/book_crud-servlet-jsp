@@ -1,5 +1,6 @@
 package controller;
 
+import service.BookService;
 import service.BookServiceImpl;
 
 import javax.servlet.ServletException;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class BookServlet extends HttpServlet {
-    private final BookServiceImpl bookService;
+    private final BookService bookService;
 
     public BookServlet() {
         this.bookService = new BookServiceImpl();
