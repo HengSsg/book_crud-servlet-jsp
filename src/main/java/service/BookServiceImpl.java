@@ -6,7 +6,7 @@ import model.vo.Book;
 
 import java.util.ArrayList;
 
-public class BookServiceImpl implements BookService{
+public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
 
     public BookServiceImpl() {
@@ -14,19 +14,18 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public boolean createBook() {
-//        bookRepository.insertOne();
-        return false;
+    public boolean createBook(Book book) {
+        return bookRepository.insertOne(book);
     }
 
     @Override
     public Book getOneBook(int no) {
-        return null;
+        return bookRepository.selectOne(no);
     }
 
     @Override
     public ArrayList<Book> getAllBooks() {
-        return null;
+        return bookRepository.selectAll();
     }
 
     @Override

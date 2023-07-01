@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -51,7 +53,7 @@
     </style>
   </head>
   <body>
-    <form action="your-endpoint" method="POST">
+    <form action="/book_crud/books/create" method="POST">
       <h2>도서 생성</h2>
 
       <label for="bookName">도서 이름:</label>

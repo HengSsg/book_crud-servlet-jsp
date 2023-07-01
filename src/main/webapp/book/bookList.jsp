@@ -1,3 +1,7 @@
+<%@page import="model.vo.Book"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,6 +37,9 @@
     </style>
   </head>
   <body>
+  <%
+ ArrayList<Book> books = (ArrayList<Book>) request.getAttribute("books");
+  %>
     <table>
       <tr>
         <th>책 번호</th>
@@ -42,22 +49,16 @@
         <th>생성일</th>
         <th>수정일</th>
       </tr>
+      <% for (Book book:books) {%>
       <tr>
-        <td>1</td>
-        <td>Book 1</td>
-        <td>Author 1</td>
-        <td>Publisher 1</td>
-        <td>2023-06-30 10:00:00</td>
-        <td>2023-06-30 10:30:00</td>
+        <td><%=book.getNo() %></td>
+        <td><a href="list/<%=book.getNo() %>"><%=book.getBookName() %></a></td>
+        <td><%=book.getBookAuthor() %></td>
+        <td><%=book.getBookPublisher() %></td>
+        <td><button>삭제</button></td>
       </tr>
-      <tr>
-        <td>2</td>
-        <td>Book 2</td>
-        <td>Author 2</td>
-        <td>Publisher 2</td>
-        <td>2023-06-30 11:00:00</td>
-        <td>2023-06-30 11:30:00</td>
-      </tr>
+           <% }%>
+     
       <!-- Add more rows for each book in the list -->
     </table>
   </body>
