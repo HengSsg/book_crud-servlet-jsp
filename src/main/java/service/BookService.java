@@ -6,16 +6,14 @@ import java.util.ArrayList;
 
 public interface BookService {
 
-    // 책 하나 가져오기
-    Book getOneBook(int no);
+    boolean createBook(); // 책 하나 추가하기
 
-    // 전체 리스트 가져오기
-    ArrayList<Book> getAllBooks();
+    Book getOneBook(int no); // 책 하나 가져오기
 
-    // 책 하나의 정보 수정하기
-    boolean updateOneBook();
+    ArrayList<Book> getAllBooks(); // 전체 리스트 가져오기
 
-    // 책 하나 삭제하기
-    boolean deleteOneBook(int no);
+    boolean updateOneBook(); // 책 하나의 정보 수정하기
+
+    boolean deleteOneBook(int no); // 책 하나 삭제하기
 
 }

@@ -15,6 +15,25 @@ public class BookDAO implements BookRepository {
         conn = connectionManager.getConnection();
     }
 
+    @Override
+    public boolean insertOne(Book book) {
+        int affectedNum = 0;
+        String sql = "insert into \n" +
+                "book(book_name, book_author, book_publisher, created_at, updated_at) \n" +
+                "values(?, ?, ?, now(), now())";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, book.getBookName());
+            pstmt.setString(2, book.getBookAuthor());
+            pstmt.setString(3, book.getBookPublisher());
+
+            affectedNum = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return affectedNum > 0;
+    }
+
     // 책 하나 select
     @Override
     public Book selectOne(int no) {
@@ -73,14 +92,13 @@ public class BookDAO implements BookRepository {
     public boolean updateOne(Book book) {
         // 책 정보 업데이트
         int affectedNum = 0;
-        String sql = "update book set book_name = ?, book_author = ?, book_publisher = ?, updated_at = ? where no = ?";
+        String sql = "update book set book_name = ?, book_author = ?, book_publisher = ?, updated_at = now() where no = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, book.getBookName());
             pstmt.setString(2, book.getBookAuthor());
             pstmt.setString(3, book.getBookPublisher());
-            pstmt.setTimestamp(4, book.getUpdatedAt());
-            pstmt.setInt(5, book.getNo());
+            pstmt.setInt(4, book.getNo());
 
             affectedNum = pstmt.executeUpdate();
 
