@@ -18,7 +18,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class BookServlet extends HttpServlet {
-    private final BookService bookService;
+    private static final long serialVersionUID = 1L;
+	private final BookService bookService;
 
     public BookServlet() {
         this.bookService = new BookServiceImpl();
