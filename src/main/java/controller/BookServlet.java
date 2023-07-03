@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serial;
 import java.util.ArrayList;
 
 public class BookServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
 	private final BookService bookService;
 
     public BookServlet() {

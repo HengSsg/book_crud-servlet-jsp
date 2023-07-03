@@ -15,12 +15,13 @@ public class BookDAO implements BookRepository {
         conn = connectionManager.getConnection();
     }
 
+    // 책 추가
     @Override
     public boolean insertOne(Book book) {
         int affectedNum = 0;
         String sql = "insert into \n" +
-                "book(book_name, book_author, book_publisher, created_at, updated_at) \n" +
-                "values(?, ?, ?, now(), now())";
+                "book(book_name, book_author, book_publisher) \n" +
+                "values(?, ?, ?)";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, book.getBookName());
@@ -87,10 +88,9 @@ public class BookDAO implements BookRepository {
 
     }
 
-
+    // 책 정보 업데이트
     @Override
     public boolean updateOne(Book book) {
-        // 책 정보 업데이트
         int affectedNum = 0;
         String sql = "update book set book_name = ?, book_author = ?, book_publisher = ?, updated_at = now() where no = ?";
         try {
@@ -109,9 +109,9 @@ public class BookDAO implements BookRepository {
         return affectedNum > 0;
     }
 
+    // 책 삭제
     @Override
     public boolean deleteOne(int no) {
-        // 책 삭제
         int affectedNum = 0;
         String sql = "delete from book where no = ?";
         try {

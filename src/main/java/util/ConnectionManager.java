@@ -3,7 +3,7 @@ package util;
 import java.sql.*;
 
 public class ConnectionManager {
-    private static ConnectionManager manager;
+    private static volatile ConnectionManager manager;
     private Connection conn;
 
     // 생성할때 커넥션 생성
