@@ -73,7 +73,7 @@ pageEncoding="UTF-8" %>
         <td><a href="list/<%=book.getNo() %>"><%=book.getBookName() %></a></td>
         <td><%=book.getBookAuthor() %></td>
         <td><%=book.getBookPublisher() %></td>
-        <td><a href="#" id="deleteBtn" class="btn" data-book-no="<%=book.getNo() %>">삭제하기</a></td>
+        <td><a href="#" class="btn deleteBtn" data-book-no="<%=book.getNo() %>">삭제하기</a></td>
       </tr>
            <% }%>
      <tr>
@@ -85,7 +85,7 @@ pageEncoding="UTF-8" %>
      
         <script>
 
-        $("#deleteBtn").click(function (e) {
+        $(".deleteBtn").click(function (e) {
           var bookNo = $(this).data("book-no");
           
           $.ajax({
