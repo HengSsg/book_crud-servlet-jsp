@@ -45,10 +45,8 @@ public class BookServlet extends HttpServlet {
                 int pageSize = Integer.parseInt(req.getParameter("pageSize"));
                 int totalDataNum = bookService.getAllBooksNum();
 
-                int totalPage = totalDataNum / pageSize;
-                if(totalDataNum % pageSize  != 0) {
-                    totalPage++;
-                }
+                int totalPage = (int) Math.ceil((double) totalDataNum / pageSize);
+
 
                 Paging paging = new Paging(totalPage, page, pageSize);
 
