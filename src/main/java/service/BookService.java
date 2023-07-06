@@ -16,4 +16,7 @@ public interface BookService {
 
     boolean deleteOneBook(int no); // 책 하나 삭제하기
 
+    int getAllBooksNum();
+
+    ArrayList<Book> getPages(int skipSize, int pageSize);
 }

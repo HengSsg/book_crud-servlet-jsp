@@ -6,6 +6,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import service.BookService;
 import service.BookServiceImpl;
+import util.Paging;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,14 +40,38 @@ public class BookServlet extends HttpServlet {
                 RequestDispatcher rd = req.getRequestDispatcher("/book/bookDetail.jsp");
                 rd.forward(req, resp);
 
-            } else { // no 가 없으면 전제 리스트 조회
-                ArrayList<Book> books = bookService.getAllBooks();
+            } else { // 글 페이지네이션
+                int page = Integer.parseInt(req.getParameter("page"));
+                int pageSize = Integer.parseInt(req.getParameter("pageSize"));
+                int totalDataNum = bookService.getAllBooksNum();
+
+                int totalPage = totalDataNum / pageSize;
+                if(totalDataNum % pageSize  != 0) {
+                    totalPage++;
+                }
+
+                Paging paging = new Paging(totalPage, page, pageSize);
+
+                int skipSize = page * pageSize - pageSize;
+
+
+                ArrayList<Book> books = bookService.getPages(skipSize, pageSize);
 
                 req.setAttribute("books", books);
+                req.setAttribute("paging", paging);
                 RequestDispatcher rd = req.getRequestDispatcher("/book/bookList.jsp");
                 rd.forward(req, resp);
 
             }
+
+//            else { // no 가 없으면 전제 리스트 조회
+//                ArrayList<Book> books = bookService.getAllBooks();
+//
+//                req.setAttribute("books", books);
+//                RequestDispatcher rd = req.getRequestDispatcher("/book/bookList.jsp");
+//                rd.forward(req, resp);
+//
+//            }
         }
         if ("create".equals(endpoint)) { // 책 생성 페이지 리턴
 

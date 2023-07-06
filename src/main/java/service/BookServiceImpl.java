@@ -37,4 +37,16 @@ public class BookServiceImpl implements BookService {
     public boolean deleteOneBook(int no) {
         return bookRepository.deleteOne(no);
     }
+
+    @Override
+    public int getAllBooksNum() {
+        return  bookRepository.selectAllCount();
+    }
+
+    @Override
+    public ArrayList<Book> getPages(int skipSize, int pageSize) {
+        return bookRepository.selectPages(skipSize, pageSize);
+    }
+
+
 }

@@ -13,4 +13,8 @@ public interface BookRepository {
     boolean updateOne(Book book); // 책 데이터 수정
 
     boolean deleteOne(int no); // 책 데이터 삭제
+
+    int selectAllCount(); // 총 데이터 갯수
+
+    ArrayList<Book> selectPages(int skipSize, int pageSize);
 }

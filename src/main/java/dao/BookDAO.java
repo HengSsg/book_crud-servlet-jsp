@@ -127,4 +127,51 @@ public class BookDAO implements BookRepository {
         return affectedNum > 0;
     }
 
+    @Override
+    public int selectAllCount() {
+        int totalNum = 0;
+        String sql = "SELECT COUNT(*) AS total FROM book";
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            if (rs.next()) {
+                totalNum = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalNum;
+    }
+
+    @Override
+    public ArrayList<Book> selectPages(int skipNum, int pageSize) {
+        ArrayList<Book> books = new ArrayList<>();
+        String sql = "select * from book ORDER BY created_at DESC limit ?, ?";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, skipNum);
+            pstmt.setInt(2, pageSize);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Book book = new Book();
+                book.setNo(rs.getInt("no"));
+                book.setBookName(rs.getString("book_name"));
+                book.setBookAuthor(rs.getString("book_author"));
+                book.setBookPublisher(rs.getString("book_publisher"));
+                book.setCreatedAt(rs.getTimestamp("created_at"));
+                book.setUpdatedAt(rs.getTimestamp("updated_at"));
+                books.add(book);
+            }
+            connectionManager.closeConnection(rs, pstmt);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return books;
+    }
+
+
 }
